@@ -1,0 +1,109 @@
+/* Hallmark · v2.0.0 · theme: Cobalt (by request) · genre: modern-minimal · job: hire, the action in the hero and in the contact close
+   pre-emit critique: P4 H5 E4 S5 R4 V4 · weakest: P, strengthened by leading with REU research output and real metrics
+   imagery: none (portfolio of a person; product is the work itself, shown via code and figures)
+   posture: restrained · nav: edge-aligned wordmark and one action · footer: statement close, links beneath */
+
+:root {
+  /* ── Cobalt palette ── */
+  --color-paper:        oklch(98.6% 0.005 250);
+  --color-paper-2:      oklch(96.2% 0.008 252);
+  --color-paper-3:      oklch(93%   0.011 252);
+  --color-ink:          oklch(21%   0.028 262);
+  --color-ink-2:        oklch(36%   0.022 260);
+  --color-muted:        oklch(50%   0.018 258);
+  --color-rule:         oklch(90%   0.009 252);
+  --color-rule-2:       oklch(83%   0.012 252);
+  --color-graphite:     oklch(21%   0.024 262);
+  --color-graphite-2:   oklch(26.5% 0.026 262);
+  --color-graphite-ink: oklch(93%   0.010 250);
+  --color-graphite-muted: oklch(69% 0.022 256);
+  --color-accent:       oklch(52%   0.19  258);
+  --color-accent-2:     oklch(76%   0.13  254);
+  --color-accent-wash:  oklch(95%   0.028 256);
+  --color-accent-ink:   oklch(98.6% 0.005 250);
+  --color-accent-deep:  oklch(43%   0.2   262);
+  --color-accent-edge:  oklch(39%   0.16  260);
+  --color-focus:        oklch(52%   0.19  258);
+  --color-glyph-1:      oklch(89%   0.025 254);
+  --color-glyph-2:      oklch(81%   0.045 255);
+  --color-glyph-3:      oklch(70%   0.085 256);
+  --color-glyph-4:      oklch(60%   0.13  257);
+  --color-key-face:     oklch(99.4% 0.003 250);
+  --color-key-edge:     oklch(80%   0.016 254);
+  --color-success:      oklch(55%   0.15  165);
+  --color-warn:         oklch(60%   0.14  75);
+
+  /* ── Fonts ── */
+  --font-display: "Familjen Grotesk", system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans", system-ui, sans-serif;
+  --font-outlier: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ── Type scale (1440px base) ── */
+  --text-display:   clamp(3rem,  5.8vw, 5.25rem);
+  --text-display-s: clamp(2.2rem, 4.1vw, 3.75rem);
+  --text-section:   clamp(1.8rem, 3.2vw, 3.25rem);
+  --text-title:     clamp(1.1rem, 1.7vw, 1.5625rem);
+  --text-lead:      clamp(1rem,   1.4vw, 1.3125rem);
+  --text-md:        1rem;
+  --text-sm:        0.875rem;
+
+  /* ── Spacing ── */
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs:  8px;
+  --space-sm:  12px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 144px;
+
+  /* ── Section rhythm ── */
+  --section-gap-s: 120px;
+  --section-gap:   144px;
+  --section-gap-l: 176px;
+
+  /* ── Layout ── */
+  --container:     1440px;
+  --gutter:        64px;
+  --gap-columns:   32px;
+  --banner-height: 72px;
+
+  /* ── Radii ── */
+  --radius-card:  8px;
+  --radius-input: 6px;
+  --radius-pill:  999px;
+  --cut:    8px;
+  --cut-l: 16px;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 1px 2px oklch(21% 0.028 262 / 0.06);
+  --shadow-key:  0 3px 0 0 var(--color-key-edge), 0 6px 8px -4px oklch(21% 0.028 262 / 0.28), inset 0 1px 0 oklch(100% 0 0 / 0.9);
+  --shadow-key-accent: 0 3px 0 0 var(--color-accent-edge), 0 6px 8px -4px oklch(30% 0.12 260 / 0.45), inset 0 1px 0 oklch(100% 0 0 / 0.22);
+  --shadow-key-press: inset 0 1px 2px oklch(21% 0.028 262 / 0.14);
+
+  /* ── Motion ── */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --dur-micro:  120ms;
+  --dur-short:  220ms;
+  --dur-long:   420ms;
+
+  /* ── Cobalt-specific ── */
+  --tracking-display: -0.028em;
+  --rule-hair: 1px;
+  --cell-w: 8px;
+  --cell-h: 16px;
+
+  /* ── Z layers ── */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+}

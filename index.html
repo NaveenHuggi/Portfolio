@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naveen Huggi — AI Systems & Infrastructure Researcher</title>
+  <meta name="description" content="Naveen Huggi is a CS/AI undergraduate at KLE Tech (CGPA 9.5) researching autonomous infrastructure, ST-GNN fault detection, and 5G RAN scheduling.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tokens + Base -->
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAV — edge-aligned, sticky
+     ══════════════════════════════════ -->
+<header class="nav" role="banner">
+  <div class="container nav__inner">
+    <a href="#top" class="nav__wordmark" aria-label="Naveen Huggi — home">
+      <span class="nav__initials" aria-hidden="true">NH</span>
+      <span class="nav__name">Naveen Huggi</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary navigation">
+      <a href="#work" class="nav__link">Work</a>
+      <a href="#research" class="nav__link">Research</a>
+      <a href="#skills" class="nav__link">Skills</a>
+      <a href="#contact" class="nav__link">Contact</a>
+    </nav>
+    <a href="#contact" class="key key--primary nav__cta">Hire me</a>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2" y="5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+        <rect x="2" y="9.25" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+        <rect x="2" y="13.5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div class="nav__mobile" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" hidden>
+    <nav class="nav__mobile-links">
+      <a href="#work"     class="nav__mobile-link">Work</a>
+      <a href="#research" class="nav__mobile-link">Research</a>
+      <a href="#skills"   class="nav__mobile-link">Skills</a>
+      <a href="#contact"  class="nav__mobile-link">Contact</a>
+      <a href="#contact"  class="key key--primary nav__mobile-cta">Hire me</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════
+     HERO — Stage posture
+     Headline + lede on 5 cols,
+     ASCII field canvas on right
+     ══════════════════════════════════ -->
+<main id="top">
+<section class="hero" aria-label="Introduction">
+  <!-- ASCII field background -->
+  <div class="hero__field" aria-hidden="true">
+    <canvas class="ascii-canvas" id="asciiCanvas"></canvas>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__text">
+      <div class="hero__status">
+        <span class="metric">REU Research ·</span>
+        <span class="metric" id="heroStatus">Systems · AI · Infrastructure</span>
+      </div>
+      <h1 class="hero__headline">AI that fixes infrastructure,<br>not just monitors it.</h1>
+      <p class="hero__lede">KLE Tech undergraduate (CGPA&nbsp;9.5) researching autonomous fault recovery, ST-GNN telemetry prediction, and 5G RAN scheduling. Global Rank&nbsp;147, WiDS&nbsp;2025.</p>
+      <div class="hero__actions">
+        <a href="#work" class="key key--primary">View my work</a>
+        <a href="https://github.com/NaveenHuggi" target="_blank" rel="noopener noreferrer" class="key">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- Signature: live terminal showing real metrics -->
+    <div class="hero__visual cut" role="img" aria-label="Live metrics from REU research">
+      <div class="terminal graphite">
+        <div class="terminal__bar">
+          <span class="terminal__dot terminal__dot--r" aria-hidden="true"></span>
+          <span class="terminal__dot terminal__dot--y" aria-hidden="true"></span>
+          <span class="terminal__dot terminal__dot--g" aria-hidden="true"></span>
+          <span class="terminal__title metric">autonomous-sre · fault-simulation</span>
+        </div>
+        <div class="terminal__body">
+          <div class="terminal__line"><span class="metric token">$</span> <span class="metric">run eval --model ST-GNN --dataset cascading_100k</span></div>
+          <div class="terminal__line terminal__line--gap"></div>
+          <div class="terminal__line"><span class="metric graphite-muted">Epoch 48/50</span> <span class="metric token">[████████████████████] 100%</span></div>
+          <div class="terminal__line terminal__line--gap"></div>
+          <div class="terminal__output">
+            <div class="terminal__row">
+              <span class="metric graphite-muted">F1 Score</span>
+              <span class="metric token terminal__val">93.8%</span>
+            </div>
+            <div class="terminal__row">
+              <span class="metric graphite-muted">Recovery MTTR</span>
+              <span class="metric token terminal__val">132.6 s</span>
+            </div>
+            <div class="terminal__row">
+              <span class="metric graphite-muted">Latency (p99)</span>
+              <span class="metric token terminal__val">14.8 ms</span>
+            </div>
+            <div class="terminal__row">
+              <span class="metric graphite-muted">Recovery accel.</span>
+              <span class="metric token terminal__val">13.6×</span>
+            </div>
+          </div>
+          <div class="terminal__line terminal__line--gap"></div>
+          <div class="terminal__line"><span class="metric token" style="color:var(--color-success)">✓</span> <span class="metric">Evaluation complete. 4 faults detected, 4 recovered.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     STAT BAND — 4 real figures
+     ══════════════════════════════════ -->
+<section class="stats" aria-label="Key metrics">
+  <div class="container">
+    <hr class="rule">
+    <div class="stats__grid">
+      <div class="stat">
+        <div class="stat__figure">9.5</div>
+        <div class="stat__label">CGPA at KLE Tech</div>
+      </div>
+      <div class="stat">
+        <div class="stat__figure">147</div>
+        <div class="stat__label">Global rank, WiDS 2025</div>
+      </div>
+      <div class="stat">
+        <div class="stat__figure">13.6×</div>
+        <div class="stat__label">Faster fault recovery (ST-GNN)</div>
+      </div>
+      <div class="stat">
+        <div class="stat__figure">14</div>
+        <div class="stat__label">Public GitHub repositories</div>
+      </div>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     WORK — Project grid
+     ══════════════════════════════════ -->
+<section class="work" id="work" aria-labelledby="work-heading">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="work-heading">Six systems, real results.</h2>
+      <p class="lead">From Kubernetes pod scheduling to 5G RAN drift detection, each project ships with numbers.</p>
+    </div>
+
+    <div class="projects">
+
+      <!-- Project 1 — REU / ST-GNN -->
+      <article class="project cut reveal">
+        <div class="project__header">
+          <div class="project__meta">
+            <span class="metric">Python · PyTorch · OpenStack · Kubernetes</span>
+            <span class="project__year metric">2026</span>
+          </div>
+          <h3 class="project__title">Autonomous Data-Center SRE</h3>
+        </div>
+        <p class="project__desc">ST-GNN trained on 100&thinsp;k cascading-fault traces. Autonomous agent detects anomalies, determines root cause, and executes recovery with no human in the loop. F1&nbsp;93.8%, MTTR&nbsp;132.6&thinsp;s, 13.6× faster than manual playbooks.</p>
+        <div class="project__metrics">
+          <div class="metric-pill cut--sm"><span class="metric">F1</span><span class="metric token">93.8%</span></div>
+          <div class="metric-pill cut--sm"><span class="metric">MTTR</span><span class="metric token">132.6 s</span></div>
+          <div class="metric-pill cut--sm"><span class="metric">P99 latency</span><span class="metric token">14.8 ms</span></div>
+        </div>
+        <div class="project__links">
+          <a href="https://github.com/NaveenHuggi/Autonomous-AI-Infra" target="_blank" rel="noopener" class="key">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Repo
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 2 — LAM -->
+      <article class="project cut reveal">
+        <div class="project__header">
+          <div class="project__meta">
+            <span class="metric">Python · LLMs · Playwright · FastAPI</span>
+            <span class="project__year metric">2026</span>
+          </div>
+          <h3 class="project__title">Large Action Model — Education</h3>
+        </div>
+        <p class="project__desc">A Dual-Brain architecture (slow planner + fast executor) that maps natural-language goals to browser actions in real time. 94.00% task success, sub-15&thinsp;ms dispatch latency. Demonstrated on e-learning platforms.</p>
+        <div class="project__metrics">
+          <div class="metric-pill cut--sm"><span class="metric">Task success</span><span class="metric token">94.00%</span></div>
+          <div class="metric-pill cut--sm"><span class="metric">Dispatch</span><span class="metric token">&lt;15 ms</span></div>
+        </div>
+        <div class="project__links">
+          <a href="https://github.com/NaveenHuggi/Large-Action-Model-for-Education" target="_blank" rel="noopener" class="key">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Repo
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 3 — 5G RAN -->
+      <article class="project cut reveal">
+        <div class="project__header">
+          <div class="project__meta">
+            <span class="metric">Python · Isolation Forest · Docker · O-RAN</span>
+            <span class="project__year metric">2026</span>
+          </div>
+          <h3 class="project__title">Drift-Aware 5G RAN Scheduler</h3>
+        </div>
+        <p class="project__desc">Monitors live RAN KPIs for concept drift using Isolation Forest and ADWIN. Triggers re-calibration before SLA degradation occurs. Tested on O-RAN testbed with real xApp integration.</p>
+        <div class="project__links">
+          <a href="https://github.com/NaveenHuggi/O-RAN-Testbed-Automation." target="_blank" rel="noopener" class="key">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Repo
+          </a>
+          <a href="https://github.com/NaveenHuggi/Drift_Visualization_Course_Project" target="_blank" rel="noopener" class="key">Drift viz</a>
+        </div>
+      </article>
+
+      <!-- Project 4 — DataSet-Analysis -->
+      <article class="project cut reveal">
+        <div class="project__header">
+          <div class="project__meta">
+            <span class="metric">JavaScript · React · Groq · Llama&thinsp;3</span>
+            <span class="project__year metric">2026</span>
+          </div>
+          <h3 class="project__title">Dataset Analyser — AI Mentor</h3>
+        </div>
+        <p class="project__desc">Full-stack web app that turns raw CSV files into ML insights. Groq-powered Llama&thinsp;3 mentor guides EDA, feature engineering, model selection and training, step by step. 1 GitHub star.</p>
+        <div class="project__links">
+          <a href="https://github.com/NaveenHuggi/DataSet-Analysis" target="_blank" rel="noopener" class="key">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Repo
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 5 — Civic Sense -->
+      <article class="project cut reveal">
+        <div class="project__header">
+          <div class="project__meta">
+            <span class="metric">JavaScript · Python · DeepFace · OpenCV</span>
+            <span class="project__year metric">2025</span>
+          </div>
+          <h3 class="project__title">Civic Sense — Edge AI PoC</h3>
+        </div>
+        <p class="project__desc">Edge AI system combining Haar Cascade face detection and DeepFace verification to identify uncivic behaviour (littering, spitting) via live camera feeds. Proof-of-concept for smart-city enforcement.</p>
+        <div class="project__links">
+          <a href="https://github.com/NaveenHuggi/Civic-Sense" target="_blank" rel="noopener" class="key">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Repo
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 6 — Juniper Mist -->
+      <article class="project cut reveal">
+        <div class="project__header">
+          <div class="project__meta">
+            <span class="metric">Python · REST API · ML · Wi-Fi</span>
+            <span class="project__year metric">2025</span>
+          </div>
+          <h3 class="project__title">Juniper Mist Wi-Fi Optimiser</h3>
+        </div>
+        <p class="project__desc">Automated Wi-Fi optimisation pipeline using the Juniper Mist API. Collects live RF metrics, runs ML-based channel and power recommendations, and applies them without manual intervention.</p>
+        <div class="project__links">
+          <a href="https://github.com/NaveenHuggi/Juniper-Mist-Wifi-Optimization" target="_blank" rel="noopener" class="key">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Repo
+          </a>
+        </div>
+      </article>
+
+    </div><!-- /projects -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     RESEARCH — IEEE paper + WiDS
+     ══════════════════════════════════ -->
+<section class="research" id="research" aria-labelledby="research-heading">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="research-heading">Published and placed.</h2>
+    </div>
+
+    <div class="research__grid">
+
+      <!-- IEEE Paper -->
+      <article class="paper-card cut reveal">
+        <div class="paper-card__venue graphite">
+          <span class="metric">IEEE Xplore · 2026</span>
+        </div>
+        <div class="paper-card__body">
+          <h3 class="paper-card__title">Real-Time Detection of Plastic Waste in Oceans using YOLOv12</h3>
+          <p class="paper-card__authors">Naveen Huggi et al. — IEEE Published</p>
+          <p class="paper-card__abstract">YOLOv12-based detection system for identifying plastic waste in ocean environments from aerial and satellite imagery. Achieves real-time inference suitable for autonomous drone monitoring.</p>
+          <a href="https://ieeexplore.ieee.org/document/11507543" target="_blank" rel="noopener" class="key paper-card__link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Read on IEEE Xplore
+          </a>
+        </div>
+      </article>
+
+      <!-- WiDS Datathon -->
+      <article class="paper-card cut reveal">
+        <div class="paper-card__venue graphite">
+          <span class="metric">Kaggle · WiDS Datathon 2025</span>
+        </div>
+        <div class="paper-card__body">
+          <h3 class="paper-card__title">Global Rank 147 — WiDS Datathon 2025</h3>
+          <p class="paper-card__authors">Naveen Huggi — Kaggle Competition</p>
+          <p class="paper-card__abstract">Top-tier placement in the Women in Data Science international Datathon 2025, a global ML competition. Applied ensemble methods and advanced feature engineering to reach Rank&nbsp;147 worldwide.</p>
+          <div class="metric-pill cut--sm" style="display:inline-flex; margin-top: var(--space-md);">
+            <span class="metric">Global Rank</span>
+            <span class="metric token">147</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- HackerRank SQL -->
+      <article class="paper-card cut reveal">
+        <div class="paper-card__venue graphite">
+          <span class="metric">HackerRank · Certificate</span>
+        </div>
+        <div class="paper-card__body">
+          <h3 class="paper-card__title">SQL Intermediate Certificate</h3>
+          <p class="paper-card__authors">HackerRank · Issued to Naveen Huggi</p>
+          <p class="paper-card__abstract">Certified proficiency in intermediate SQL: joins, aggregations, subqueries, window functions, and query optimisation. Verified by HackerRank's proctored assessment.</p>
+          <a href="https://www.hackerrank.com/certificates/iframe/54e91b2e603c" target="_blank" rel="noopener" class="key paper-card__link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View certificate
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SKILLS — Rows composition
+     ══════════════════════════════════ -->
+<section class="skills" id="skills" aria-labelledby="skills-heading">
+  <div class="container">
+    <hr class="rule">
+    <div class="skills__inner">
+      <div class="skills__head">
+        <h2 id="skills-heading">Stack.</h2>
+        <p class="lead">Systems-level AI with production tooling.</p>
+      </div>
+      <div class="skills__rows" role="list">
+
+        <div class="skill-row" role="listitem">
+          <div class="skill-row__label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>Languages</span>
+          </div>
+          <div class="skill-row__tags">
+            <span class="chip">Python</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Shell</span>
+            <span class="chip">SQL</span>
+            <span class="chip">C</span>
+          </div>
+        </div>
+
+        <div class="skill-row" role="listitem">
+          <div class="skill-row__label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            <span>AI / ML</span>
+          </div>
+          <div class="skill-row__tags">
+            <span class="chip">PyTorch</span>
+            <span class="chip">ST-GNN</span>
+            <span class="chip">YOLOv12</span>
+            <span class="chip">LLM agents</span>
+            <span class="chip">RAG</span>
+            <span class="chip">Groq / Llama 3</span>
+            <span class="chip">DeepFace</span>
+          </div>
+        </div>
+
+        <div class="skill-row" role="listitem">
+          <div class="skill-row__label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span>Infrastructure</span>
+          </div>
+          <div class="skill-row__tags">
+            <span class="chip">Kubernetes</span>
+            <span class="chip">Docker</span>
+            <span class="chip">OpenStack</span>
+            <span class="chip">O-RAN / 5G</span>
+            <span class="chip">GitHub Actions</span>
+          </div>
+        </div>
+
+        <div class="skill-row" role="listitem">
+          <div class="skill-row__label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Observability</span>
+          </div>
+          <div class="skill-row__tags">
+            <span class="chip">Prometheus</span>
+            <span class="chip">Grafana</span>
+            <span class="chip">FastAPI</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">Playwright</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     ABOUT — Statement composition
+     ══════════════════════════════════ -->
+<section class="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about__inner reveal">
+      <blockquote class="about__statement">
+        "Infrastructure that heals itself is not science fiction. It is the gap between what current monitoring gives you and what an autonomous agent with the right model can do."
+      </blockquote>
+      <div class="about__bio">
+        <p><strong>Naveen Huggi</strong> is a final-year B.E. Computer Science (AI) student at KLE Technological University, Hubballi, India. Currently on a Research Experience for Undergraduates (REU) programme building autonomous SRE systems for data centres.</p>
+        <p>Previously worked with the Juniper Mist API, contributed to Gen-AI hackathon projects, and published computer-vision research in IEEE. Available for research internships and full-time roles starting 2027.</p>
+        <div class="about__links">
+          <a href="https://github.com/NaveenHuggi" target="_blank" rel="noopener" class="key">GitHub</a>
+          <a href="https://ieeexplore.ieee.org/document/11507543" target="_blank" rel="noopener" class="key">IEEE Paper</a>
+          <a href="https://www.hackerrank.com/certificates/iframe/54e91b2e603c" target="_blank" rel="noopener" class="key">SQL Certificate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT — Close / action
+     ══════════════════════════════════ -->
+<section class="contact" id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="contact__band graphite cut">
+      <div class="contact__content">
+        <h2 id="contact-heading" class="contact__headline">Let's build autonomous infrastructure together.</h2>
+        <p class="contact__sub">Research internships, full-time roles, and collaborations in AI systems, MLOps, and 5G. Based in Hubballi, India. Open to remote.</p>
+      </div>
+      <div class="contact__links">
+        <a href="mailto:naveenhuggi@gmail.com" class="key key--primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email me
+        </a>
+        <a href="https://github.com/NaveenHuggi" target="_blank" rel="noopener" class="key">GitHub</a>
+        <a href="https://www.linkedin.com/in/naveen-huggi/" target="_blank" rel="noopener" class="key">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main><!-- /main -->
+
+<!-- ══════════════════════════════════
+     FOOTER
+     ══════════════════════════════════ -->
+<footer class="footer" role="contentinfo">
+  <div class="container footer__inner">
+    <div class="footer__left">
+      <span class="footer__wordmark">Naveen Huggi</span>
+      <span class="footer__sub metric">KLE Technological University · B.E. CSE (AI) · 2027</span>
+    </div>
+    <nav class="footer__links" aria-label="Footer navigation">
+      <a href="https://github.com/NaveenHuggi" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://ieeexplore.ieee.org/document/11507543" target="_blank" rel="noopener">IEEE</a>
+      <a href="https://www.hackerrank.com/certificates/iframe/54e91b2e603c" target="_blank" rel="noopener">HackerRank</a>
+      <a href="mailto:naveenhuggi@gmail.com">naveenhuggi@gmail.com</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* Add .js class for reveal progressive enhancement */
+  document.documentElement.classList.add('js');
+
+  /* ── Mobile nav toggle ── */
+  var toggle = document.querySelector('.nav__toggle');
+  var menu   = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', function(){
+      var open = menu.hidden === false;
+      menu.hidden = open;
+      toggle.setAttribute('aria-expanded', String(!open));
+    });
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        menu.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /* ── Sticky nav tint on scroll ── */
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    var onScroll = function(){
+      nav.classList.toggle('nav--scrolled', window.scrollY > 24);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ── Reveal on scroll ── */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(function(el){ io.observe(el); });
+    } else {
+      reveals.forEach(function(el){ el.classList.add('visible'); });
+    }
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ── ASCII field canvas ── */
+  var canvas = document.getElementById('asciiCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var CW = 8, CH = 16;
+  var chars = '·∘○◌◍◎●◉∙◦▪▫░▒▓';
+  var pointer = { x: -1, y: -1 };
+
+  function resize(){
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  document.addEventListener('mousemove', function(e){
+    var rect = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  }, { passive: true });
+
+  var t = 0;
+  var rafId;
+  function draw(){
+    if (!canvas.offsetParent && canvas.offsetHeight === 0) {
+      rafId = requestAnimationFrame(draw);
+      return;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var cols = Math.ceil(canvas.width  / CW);
+    var rows = Math.ceil(canvas.height / CH);
+    for (var r = 0; r < rows; r++){
+      for (var c = 0; c < cols; c++){
+        var x = c * CW + CW/2, y = r * CH + CH/2;
+        var dx = x - pointer.x, dy = y - pointer.y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        var ripple = Math.max(0, 1 - dist / 160);
+        var noise = (Math.sin(c * 0.42 + t * 0.8) * Math.cos(r * 0.38 + t * 0.6) + 1) / 2;
+        var val = Math.min(1, noise * 0.55 + ripple * 0.65);
+        var idx = Math.floor(val * (chars.length - 1));
+        var glyph = chars[idx];
+        /* Cobalt glyph tints */
+        var glyphCols = [
+          'oklch(89% 0.025 254)', 'oklch(81% 0.045 255)',
+          'oklch(70% 0.085 256)', 'oklch(60% 0.13  257)',
+          'oklch(52% 0.19  258)'
+        ];
+        var ci = Math.floor(val * (glyphCols.length - 1));
+        ctx.font = '10px/1 "JetBrains Mono", monospace';
+        ctx.fillStyle = glyphCols[ci];
+        ctx.fillText(glyph, x - 4, y + 4);
+      }
+    }
+    t += 0.025;
+    if (!reduceMotion) rafId = requestAnimationFrame(draw);
+  }
+
+  if (!reduceMotion) {
+    draw();
+    var io2 = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) rafId = requestAnimationFrame(draw);
+        else { cancelAnimationFrame(rafId); }
+      });
+    });
+    io2.observe(canvas);
+  } else {
+    /* Static fallback: single frame at reduced density */
+    draw();
+  }
+
+})();
+</script>
+</body>
+</html>

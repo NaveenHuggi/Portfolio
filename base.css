@@ -1,0 +1,168 @@
+/* base.css — Hallmark scaffold base, Cobalt theme */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  overflow-x: clip;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--banner-height) + 16px);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@media (max-width: 768px) {
+  .container { padding-inline: var(--space-lg); }
+}
+@media (max-width: 480px) {
+  .container { padding-inline: var(--space-md); }
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+h1 { font-size: var(--text-display); line-height: 1.04; }
+h2 { font-size: var(--text-section); line-height: 1.08; }
+h3 { font-size: var(--text-title); font-weight: 500; line-height: 1.25; }
+p { text-wrap: pretty; }
+
+a {
+  color: inherit;
+  text-decoration-color: var(--color-rule-2);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+a:hover { text-decoration-color: var(--color-accent); }
+a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+code, .mono {
+  font-family: var(--font-outlier);
+  font-size: 0.875em;
+}
+
+/* Selection & browser surfaces */
+::selection { background: var(--color-accent-wash); color: var(--color-ink); }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-paper-2); }
+::-webkit-scrollbar-thumb { background: var(--color-rule-2); border-radius: 4px; }
+scrollbar-color: var(--color-rule-2) var(--color-paper-2);
+caret-color: var(--color-accent);
+
+/* Keycap buttons */
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-input);
+  padding: 0 var(--space-lg);
+  min-height: 48px;
+  background: var(--color-key-face);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: var(--shadow-key);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+}
+.key:hover { transform: translateY(-1px); }
+.key:active { transform: translateY(3px); box-shadow: var(--shadow-key-press); }
+.key:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.key--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent-edge);
+  color: var(--color-accent-ink);
+  box-shadow: var(--shadow-key-accent);
+}
+.key--primary:hover { transform: translateY(-1px); }
+
+/* Cut-corner panels (Cobalt signature) */
+.cut {
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+}
+@supports (corner-shape: bevel) {
+  .cut { border-radius: var(--cut-l) 4px var(--cut-l) 4px; corner-shape: bevel round bevel round; }
+}
+.cut--sm {
+  border-radius: var(--cut) 2px var(--cut) 2px;
+}
+@supports (corner-shape: bevel) {
+  .cut--sm { corner-shape: bevel round bevel round; }
+}
+
+/* Graphite surface */
+.graphite {
+  background: var(--color-graphite);
+  color: var(--color-graphite-ink);
+}
+.graphite .token { color: var(--color-accent-2); }
+
+/* Hairline rule */
+.rule { display: block; height: var(--rule-hair); background: var(--color-rule); border: none; }
+
+/* Accent wash chip/badge */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  background: var(--color-accent-wash);
+  color: var(--color-accent-deep);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+}
+
+/* Mono metric */
+.metric {
+  font-family: var(--font-outlier);
+  font-size: 0.8125rem;
+  color: var(--color-graphite-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* Reveal animation */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+}
+.js .reveal.visible { opacity: 1; transform: none; }
