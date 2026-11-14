@@ -6,7 +6,9 @@ html, body {
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: 1.6;
+  color: #1a1e29;
   color: var(--color-ink);
+  background: #f8fafc;
   background: var(--color-paper);
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--banner-height) + 16px);
