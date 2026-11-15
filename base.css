@@ -96,12 +96,21 @@ caret-color: var(--color-accent);
 .key:active { transform: translateY(3px); box-shadow: var(--shadow-key-press); }
 .key:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .key--primary {
-  background: var(--color-accent);
-  border-color: var(--color-accent-edge);
-  color: var(--color-accent-ink);
-  box-shadow: var(--shadow-key-accent);
+  background: var(--color-graphite);
+  border-color: oklch(36% 0.025 262);
+  color: var(--color-graphite-ink);
+  box-shadow: 0 3px 0 0 oklch(14% 0.02 262), 0 6px 12px -4px oklch(14% 0.02 262 / 0.4), inset 0 1px 0 oklch(100% 0 0 / 0.15);
 }
-.key--primary:hover { transform: translateY(-1px); }
+.key--primary:hover {
+  background: var(--color-graphite-2);
+  border-color: oklch(45% 0.03 262);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.key--primary:active {
+  transform: translateY(3px);
+  box-shadow: var(--shadow-key-press);
+}
 
 /* Cut-corner panels (Cobalt signature) */
 .cut {
@@ -129,18 +138,24 @@ caret-color: var(--color-accent);
 /* Hairline rule */
 .rule { display: block; height: var(--rule-hair); background: var(--color-rule); border: none; }
 
-/* Accent wash chip/badge */
+/* Neutral slate chip/badge */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
-  background: var(--color-accent-wash);
-  color: var(--color-accent-deep);
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  color: var(--color-ink);
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: 500;
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-pill);
+  transition: border-color var(--dur-short) var(--ease-out), background var(--dur-short) var(--ease-out);
+}
+.chip:hover {
+  border-color: var(--color-ink-2);
+  background: var(--color-paper-3);
 }
 
 /* Mono metric */

@@ -294,60 +294,123 @@
 }
 
 /* ══════════════════════════════════
-   TACTICAL DIRECTIVE / PHILOSOPHY QUOTE
+   TACTICAL DEFENSE STAGE & ARMY CREED
    ══════════════════════════════════ */
-.tactical-directive {
-  padding-block: var(--space-xl);
-  position: relative;
-  z-index: 2;
-}
-.directive__card {
-  padding: var(--space-xl) var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+.tactical-stage {
+  padding-block: var(--space-3xl);
+  background: var(--color-paper-2);
+  border-top: var(--rule-hair) solid var(--color-rule);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
   position: relative;
   overflow: hidden;
-  border-left: 3px solid var(--color-accent);
-  box-shadow: var(--shadow-card);
 }
-.directive__hud {
+.tactical-stage__inner {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+.tactical-stage__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+.tactical-stage__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-ink-2);
+}
+.tactical-stage__tag .reticle-icon {
+  color: #ef4444;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.tactical-stage__quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-ink);
+}
+.tactical-stage__byline {
+  color: var(--color-muted);
+  font-size: var(--text-md);
+  line-height: 1.5;
+}
+.tactical-stage__hud-status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-card);
+}
+.hud-indicator {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  flex-wrap: wrap;
 }
-.directive__reticle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  color: var(--color-accent-2);
-  font-size: 1.15rem;
-  line-height: 1;
+.hud-beacon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  display: inline-block;
+  animation: pulseBeacon 2s infinite ease-in-out;
 }
-.directive__status {
-  margin-left: auto;
-  color: var(--color-accent-2);
+@keyframes pulseBeacon {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
-.directive__quote {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.2vw, var(--text-title));
-  font-weight: 500;
-  line-height: 1.35;
-  letter-spacing: var(--tracking-display);
-  color: var(--color-graphite-ink);
-  max-width: 48ch;
+
+/* Tactical Viewport holding the soldier canvas */
+.tactical-stage__viewport {
+  position: relative;
+  height: 480px;
+  width: 100%;
+  background: var(--color-graphite);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 8px 32px oklch(21% 0.028 262 / 0.16);
+  border: 1px solid oklch(35% 0.025 262 / 0.6);
 }
-.directive__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-  border-top: var(--rule-hair) solid oklch(35% 0.03 262 / 0.5);
-  padding-top: var(--space-sm);
+.tactical-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+.viewport-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.crosshair-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: oklch(50% 0.05 255 / 0.7);
+  border-style: solid;
+}
+.crosshair-corner--tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+.crosshair-corner--tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+.crosshair-corner--bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+.crosshair-corner--br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+@media (max-width: 900px) {
+  .tactical-stage__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .tactical-stage__viewport {
+    height: 380px;
+  }
 }
 
 /* ══════════════════════════════════
@@ -671,8 +734,16 @@
   flex-wrap: wrap;
 }
 .contact__links .key--primary {
-  /* On graphite surface, primary key stays cobalt */
+  background: var(--color-key-face);
+  border-color: var(--color-rule-2);
+  color: var(--color-ink);
+  box-shadow: 0 3px 0 0 oklch(75% 0.016 254), 0 6px 12px -4px oklch(0% 0 0 / 0.35);
   gap: var(--space-xs);
+}
+.contact__links .key--primary:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-1px);
 }
 .contact__links .key:not(.key--primary) {
   background: var(--color-graphite-2);

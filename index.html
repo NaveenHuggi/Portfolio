@@ -61,9 +61,9 @@
      ══════════════════════════════════ -->
 <main id="top">
 <section class="hero" aria-label="Introduction">
-  <!-- Tactical soldier & ballistic canvas -->
+  <!-- Subtle background grid -->
   <div class="hero__field" aria-hidden="true">
-    <canvas class="tactical-canvas" id="tacticalCanvas"></canvas>
+    <canvas class="ascii-canvas" id="asciiCanvas"></canvas>
   </div>
 
   <div class="container hero__inner">
@@ -124,24 +124,41 @@
 </section>
 
 <!-- ══════════════════════════════════
-     TACTICAL DIRECTIVE / PHILOSOPHY QUOTE
+     TACTICAL DEFENSE STAGE & ARMY CREED
      ══════════════════════════════════ -->
-<section class="tactical-directive" aria-label="Operational Directive">
-  <div class="container">
-    <div class="directive__card graphite cut reveal">
-      <div class="directive__hud">
-        <span class="directive__reticle" aria-hidden="true">⌖</span>
-        <span class="metric">MISSION PROTOCOL · ZERO TOLERANCE</span>
-        <span class="metric token directive__status">SYSTEMS DEFENSE // AUTOMATED SRE</span>
+<section class="tactical-stage" id="tactical-defense" aria-label="Tactical Defense Simulation">
+  <div class="container tactical-stage__inner">
+    
+    <div class="tactical-stage__content reveal">
+      <div class="tactical-stage__tag">
+        <span class="reticle-icon" aria-hidden="true">⌖</span>
+        <span class="metric">ARMED FORCES DIRECTIVE // VIGILANCE</span>
       </div>
-      <blockquote class="directive__quote">
-        "When cascading failures strike, there is no second shot. Aim with mathematical precision; execute without hesitation."
+      <blockquote class="tactical-stage__quote">
+        "The more you sweat in peace, the less you bleed in war."
       </blockquote>
-      <div class="directive__meta">
-        <span class="metric graphite-muted">Operational Philosophy · Autonomous Fault Detection &amp; Sub-Second Remediation</span>
-        <span class="metric token" style="color:var(--color-accent-2);">BALLISTIC DISPATCH // 13.6× RECOVERY</span>
+      <div class="tactical-stage__byline">
+        <span class="metric graphite-muted">Defense Creed · Preparedness, Discipline, and Unwavering Precision</span>
+      </div>
+      <div class="tactical-stage__hud-status">
+        <div class="hud-indicator">
+          <span class="hud-beacon" aria-hidden="true"></span>
+          <span class="metric token" id="hudBearing">STATUS: PERPENDICULAR AIM ACQUIRED</span>
+        </div>
+        <span class="metric graphite-muted">Scroll down to observe ballistic fire (or click canvas)</span>
       </div>
     </div>
+
+    <div class="tactical-stage__viewport cut" id="tacticalViewport">
+      <canvas class="tactical-canvas" id="tacticalCanvas"></canvas>
+      <div class="viewport-overlay" aria-hidden="true">
+        <span class="crosshair-corner crosshair-corner--tl"></span>
+        <span class="crosshair-corner crosshair-corner--tr"></span>
+        <span class="crosshair-corner crosshair-corner--bl"></span>
+        <span class="crosshair-corner crosshair-corner--br"></span>
+      </div>
+    </div>
+
   </div>
 </section>
 
