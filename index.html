@@ -33,7 +33,7 @@
       <a href="#skills" class="nav__link">Skills</a>
       <a href="#contact" class="nav__link">Contact</a>
     </nav>
-    <a href="#contact" class="key key--primary nav__cta">Hire me</a>
+    <a href="#contact" class="key nav__cta nav__cta--collab">Collaboration</a>
     <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <rect x="2" y="5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
@@ -49,7 +49,7 @@
       <a href="#research" class="nav__mobile-link">Research</a>
       <a href="#skills"   class="nav__mobile-link">Skills</a>
       <a href="#contact"  class="nav__mobile-link">Contact</a>
-      <a href="#contact"  class="key key--primary nav__mobile-cta">Hire me</a>
+      <a href="#contact"  class="key nav__mobile-cta nav__cta--collab">Collaboration</a>
     </nav>
   </div>
 </header>
@@ -57,13 +57,13 @@
 <!-- ══════════════════════════════════
      HERO — Stage posture
      Headline + lede on 5 cols,
-     ASCII field canvas on right
+     Tactical soldier canvas in background
      ══════════════════════════════════ -->
 <main id="top">
 <section class="hero" aria-label="Introduction">
-  <!-- ASCII field background -->
+  <!-- Tactical soldier & ballistic canvas -->
   <div class="hero__field" aria-hidden="true">
-    <canvas class="ascii-canvas" id="asciiCanvas"></canvas>
+    <canvas class="tactical-canvas" id="tacticalCanvas"></canvas>
   </div>
 
   <div class="container hero__inner">
@@ -118,6 +118,28 @@
           <div class="terminal__line terminal__line--gap"></div>
           <div class="terminal__line"><span class="metric token" style="color:var(--color-success)">✓</span> <span class="metric">Evaluation complete. 4 faults detected, 4 recovered.</span></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TACTICAL DIRECTIVE / PHILOSOPHY QUOTE
+     ══════════════════════════════════ -->
+<section class="tactical-directive" aria-label="Operational Directive">
+  <div class="container">
+    <div class="directive__card graphite cut reveal">
+      <div class="directive__hud">
+        <span class="directive__reticle" aria-hidden="true">⌖</span>
+        <span class="metric">MISSION PROTOCOL · ZERO TOLERANCE</span>
+        <span class="metric token directive__status">SYSTEMS DEFENSE // AUTOMATED SRE</span>
+      </div>
+      <blockquote class="directive__quote">
+        "When cascading failures strike, there is no second shot. Aim with mathematical precision; execute without hesitation."
+      </blockquote>
+      <div class="directive__meta">
+        <span class="metric graphite-muted">Operational Philosophy · Autonomous Fault Detection &amp; Sub-Second Remediation</span>
+        <span class="metric token" style="color:var(--color-accent-2);">BALLISTIC DISPATCH // 13.6× RECOVERY</span>
       </div>
     </div>
   </div>
@@ -640,5 +662,6 @@
 
 })();
 </script>
+<script src="tactical.js"></script>
 </body>
 </html>
