@@ -230,11 +230,17 @@
 .terminal__bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-md);
   background: var(--color-graphite-2);
   border-bottom: var(--rule-hair) solid oklch(30% 0.025 262 / 0.6);
   flex-shrink: 0;
+}
+.terminal__dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .terminal__dot {
   width: 10px;
@@ -245,9 +251,30 @@
 .terminal__dot--r { background: oklch(60% 0.18 25); }
 .terminal__dot--y { background: oklch(70% 0.17 85); }
 .terminal__dot--g { background: oklch(60% 0.17 155); }
-.terminal__title {
-  margin-left: var(--space-xs);
+.terminal__tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.terminal__tab {
+  background: transparent;
+  border: 1px solid transparent;
   color: var(--color-graphite-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 3px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color var(--dur-micro) var(--ease-out), background var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+.terminal__tab:hover {
+  color: var(--color-graphite-ink);
+  background: oklch(34% 0.025 262 / 0.5);
+}
+.terminal__tab.is-active {
+  color: var(--color-accent-2);
+  background: oklch(32% 0.025 262);
+  border-color: oklch(48% 0.04 262 / 0.6);
 }
 .terminal__body {
   flex: 1;
@@ -256,6 +283,7 @@
   flex-direction: column;
   gap: var(--space-xs);
   overflow: auto;
+  transition: opacity var(--dur-micro) var(--ease-out);
 }
 .terminal__line { display: flex; align-items: center; gap: var(--space-xs); }
 .terminal__line--gap { height: var(--space-xs); }
@@ -340,33 +368,6 @@
   color: var(--color-muted);
   font-size: var(--text-md);
   line-height: 1.5;
-}
-.tactical-stage__hud-status {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-md);
-  background: var(--color-paper);
-  border: var(--rule-hair) solid var(--color-rule-2);
-  border-radius: var(--radius-card);
-}
-.hud-indicator {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-.hud-beacon {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px #10b981;
-  display: inline-block;
-  animation: pulseBeacon 2s infinite ease-in-out;
-}
-@keyframes pulseBeacon {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
 /* Tactical Viewport holding the soldier canvas */
@@ -477,7 +478,26 @@
   gap: var(--space-md);
   padding: var(--space-xl);
   background: var(--color-paper);
+  position: relative;
+  overflow: hidden;
   transition: box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+}
+.project::before, .paper-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), oklch(50% 0.18 255 / 0.08), transparent 75%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.project:hover::before, .paper-card:hover::before {
+  opacity: 1;
+}
+.paper-card {
+  position: relative;
+  overflow: hidden;
 }
 .project:hover {
   box-shadow: 0 4px 16px oklch(21% 0.028 262 / 0.09);
@@ -729,29 +749,30 @@
 }
 .contact__links {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   flex-shrink: 0;
   flex-wrap: wrap;
 }
-.contact__links .key--primary {
-  background: var(--color-key-face);
-  border-color: var(--color-rule-2);
-  color: var(--color-ink);
-  box-shadow: 0 3px 0 0 oklch(75% 0.016 254), 0 6px 12px -4px oklch(0% 0 0 / 0.35);
-  gap: var(--space-xs);
-}
-.contact__links .key--primary:hover {
-  background: #ffffff;
-  color: #000000;
-  transform: translateY(-1px);
-}
-.contact__links .key:not(.key--primary) {
+.contact__links .key {
   background: var(--color-graphite-2);
-  border-color: oklch(40% 0.03 262 / 0.5);
+  border: 1px solid oklch(42% 0.03 262 / 0.6);
   color: var(--color-graphite-ink);
   box-shadow: 0 2px 0 0 oklch(18% 0.025 262), 0 4px 6px -3px oklch(10% 0.015 262 / 0.4), inset 0 1px 0 oklch(100% 0 0 / 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: transform var(--dur-micro) var(--ease-out), background var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
 }
-.contact__links .key:not(.key--primary):hover { transform: translateY(-1px); }
+.contact__links .key:hover {
+  background: oklch(34% 0.035 262);
+  border-color: oklch(52% 0.05 262);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.contact__links .key:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 0 oklch(18% 0.025 262);
+}
 
 /* ══════════════════════════════════
    FOOTER

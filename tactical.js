@@ -1,7 +1,8 @@
 /**
- * tactical.js — Cinematic Tactical Soldier & Ballistic Kinetic Canvas
- * Dedicated viewport canvas rendering a tactical operator who aims
- * perpendicular to the screen and fires a high-velocity projectile on scroll.
+ * tactical.js — Precision Tactical Defense Operator & Interactive Optic Tracking
+ * Smoothly transitions from low-ready to direct perpendicular aim on scroll.
+ * Interactive cursor tracking: optic reticle, Mil-Spec HUD telemetry, and targeting laser.
+ * Zero firing / ballistics — pure disciplined tactical stealth & precision engineering.
  */
 (function() {
   'use strict';
@@ -16,13 +17,28 @@
   var height = 0;
   var scrollProgress = 0;
   var targetProgress = 0;
-  var hasFired = false;
-  var lastFireTime = 0;
 
-  // Particle systems
-  var particles = [];
-  var shockwaves = [];
-  var casing = null;
+  // Interactive mouse tracking
+  var mouse = { x: 0, y: 0, active: false };
+  var currentAimOffset = { x: 0, y: 0 };
+
+  // Ambient particles (tactical atmospheric dust motes)
+  var ambientMotes = [];
+  var radarPulse = { r: 0, maxR: 320, alpha: 0.6 };
+
+  function initAmbient() {
+    ambientMotes = [];
+    for (var i = 0; i < 28; i++) {
+      ambientMotes.push({
+        x: (Math.random() - 0.5) * 560,
+        y: (Math.random() - 0.5) * 440,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: -0.15 - Math.random() * 0.3,
+        size: 1 + Math.random() * 1.8,
+        alpha: 0.15 + Math.random() * 0.45
+      });
+    }
+  }
 
   function resize() {
     var rect = canvas.getBoundingClientRect();
@@ -31,10 +47,12 @@
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    radarPulse.maxR = Math.max(width, height) * 0.65;
   }
 
   window.addEventListener('resize', resize, { passive: true });
   resize();
+  initAmbient();
 
   // Scroll detection centered on .tactical-stage
   function updateScroll() {
@@ -44,91 +62,71 @@
     var rect = stage.getBoundingClientRect();
     var windowH = window.innerHeight;
 
-    // Progression:
-    // 0.0 when top of section enters viewport bottom
-    // 0.45 - 0.65 when section is right in front of user (aims perpendicular and fires!)
-    // 1.0 when scrolling past
     var viewTravel = windowH + rect.height;
     var currentPos = windowH - rect.top;
     var raw = currentPos / viewTravel;
 
     targetProgress = Math.max(0, Math.min(1.2, raw));
-
-    // Fire trigger when section is in active view
-    if (targetProgress >= 0.42 && targetProgress <= 0.85 && !hasFired) {
-      triggerFire();
-    } else if (targetProgress < 0.25 || targetProgress > 0.95) {
-      hasFired = false;
-    }
-
-    // Update HUD text if element exists
-    var hudText = document.getElementById('hudBearing');
-    if (hudText) {
-      if (targetProgress < 0.3) {
-        hudText.textContent = 'STATUS: STANDBY // WEAPON LOW-READY';
-        hudText.style.color = '#38bdf8';
-      } else if (targetProgress < 0.45) {
-        hudText.textContent = 'STATUS: SIGHT ALIGNING // DIRECT AIM';
-        hudText.style.color = '#f59e0b';
-      } else if (targetProgress < 0.75) {
-        hudText.textContent = 'STATUS: KINETIC DISPATCH // WEAPON FIRED';
-        hudText.style.color = '#ef4444';
-      } else {
-        hudText.textContent = 'STATUS: THREAT NEUTRALIZED // TARGET HIT';
-        hudText.style.color = '#10b981';
-      }
-    }
   }
 
   window.addEventListener('scroll', updateScroll, { passive: true });
   updateScroll();
 
-  function triggerFire() {
-    hasFired = true;
-    lastFireTime = performance.now();
+  // Mouse / cursor tracking on canvas & viewport
+  function onMouseMove(e) {
+    var rect = canvas.getBoundingClientRect();
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
 
-    // Muzzle sparks
-    for (var i = 0; i < 35; i++) {
-      var angle = Math.random() * Math.PI * 2;
-      var speed = 3 + Math.random() * 9;
-      particles.push({
-        x: 0,
-        y: 4,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        size: 1.5 + Math.random() * 3,
-        alpha: 1,
-        decay: 0.025 + Math.random() * 0.04,
-        color: Math.random() > 0.35 ? '#f59e0b' : '#38bdf8'
-      });
-    }
+    // Normalize coordinates (-1 to 1) relative to canvas center
+    var nx = (e.clientX - cx) / (rect.width / 2);
+    var ny = (e.clientY - cy) / (rect.height / 2);
 
-    // Shockwaves
-    shockwaves.push({
-      radius: 6,
-      maxRadius: Math.min(width, height) * 0.55,
-      alpha: 1,
-      speed: 15
-    });
+    mouse.x = Math.max(-1.2, Math.min(1.2, nx));
+    mouse.y = Math.max(-1.2, Math.min(1.2, ny));
+    mouse.active = true;
+  }
 
-    // Ejected brass casing
-    casing = {
-      x: 32,
-      y: 12,
-      vx: 4 + Math.random() * 2.5,
-      vy: -5 - Math.random() * 2.5,
-      rot: 0,
-      vrot: 0.3 + Math.random() * 0.25,
-      alpha: 1
-    };
+  function onMouseLeave() {
+    mouse.active = false;
+  }
+
+  canvas.addEventListener('mousemove', onMouseMove, { passive: true });
+  canvas.addEventListener('mouseleave', onMouseLeave, { passive: true });
+  var viewport = document.getElementById('tacticalViewport');
+  if (viewport) {
+    viewport.addEventListener('mousemove', onMouseMove, { passive: true });
+    viewport.addEventListener('mouseleave', onMouseLeave, { passive: true });
   }
 
   function lerp(start, end, factor) {
     return start + (end - start) * factor;
   }
 
+  var isVisible = true;
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+  }
+
   function draw() {
-    scrollProgress = lerp(scrollProgress, targetProgress, 0.12);
+    if (!isVisible) {
+      requestAnimationFrame(draw);
+      return;
+    }
+
+    scrollProgress = lerp(scrollProgress, targetProgress, 0.1);
+
+    // Aim phase: 0 -> 1 as user reaches and engages with tactical stage
+    var aimPhase = Math.max(0, Math.min(1, (scrollProgress - 0.16) / 0.28));
+
+    // Smoothly track mouse aim offset when aim is engaged
+    var targetAimX = mouse.active ? mouse.x * 38 : 0;
+    var targetAimY = mouse.active ? mouse.y * 24 : 0;
+    currentAimOffset.x = lerp(currentAimOffset.x, targetAimX, 0.08);
+    currentAimOffset.y = lerp(currentAimOffset.y, targetAimY, 0.08);
 
     ctx.clearRect(0, 0, width, height);
 
@@ -142,16 +140,13 @@
     ctx.translate(cx, cy);
     ctx.scale(scale, scale);
 
-    // Aim phase: 0 -> 1 as scrollProgress goes from 0.15 to 0.42
-    var aimPhase = Math.max(0, Math.min(1, (scrollProgress - 0.15) / 0.27));
-    // Fire phase: 0 -> 1 as scrollProgress goes from 0.42 to 0.72
-    var firePhase = Math.max(0, Math.min(1, (scrollProgress - 0.42) / 0.3));
+    // Subtle tactical breathing oscillation
+    var breath = Math.sin(Date.now() * 0.0022) * 2;
 
     drawGridBackground();
-    drawTacticalHUD(aimPhase, firePhase);
-    drawSoldier(aimPhase, firePhase);
-    drawBulletAndMuzzle(firePhase);
-    drawParticles();
+    drawAmbientMotes();
+    drawSoldier(aimPhase, breath, currentAimOffset);
+    drawTacticalHUD(aimPhase, currentAimOffset);
 
     ctx.restore();
 
@@ -160,115 +155,109 @@
 
   function drawGridBackground() {
     ctx.save();
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.06)';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.05)';
     ctx.lineWidth = 1;
-    for (var x = -260; x <= 260; x += 40) {
-      ctx.beginPath();
-      ctx.moveTo(x, -200);
-      ctx.lineTo(x, 200);
-      ctx.stroke();
-    }
-    for (var y = -200; y <= 200; y += 40) {
-      ctx.beginPath();
-      ctx.moveTo(-260, y);
-      ctx.lineTo(260, y);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
 
-  function drawTacticalHUD(aim, fire) {
-    ctx.save();
-    var hudColor = aim > 0.85 ? (fire > 0 && fire < 0.75 ? '#ef4444' : '#f59e0b') : '#38bdf8';
-    ctx.strokeStyle = hudColor;
+    // Mil-Spec Tactical Coordinate Grid
+    for (var x = -280; x <= 280; x += 40) {
+      ctx.beginPath();
+      ctx.moveTo(x, -210);
+      ctx.lineTo(x, 210);
+      ctx.stroke();
+    }
+    for (var y = -210; y <= 210; y += 40) {
+      ctx.beginPath();
+      ctx.moveTo(-280, y);
+      ctx.lineTo(280, y);
+      ctx.stroke();
+    }
+
+    // Expanding Radar Sonar Pulse
+    radarPulse.r += 0.8;
+    if (radarPulse.r > radarPulse.maxR) radarPulse.r = 0;
+    var pulseAlpha = (1 - radarPulse.r / radarPulse.maxR) * 0.25;
+
+    ctx.strokeStyle = 'rgba(56, 189, 248, ' + pulseAlpha + ')';
     ctx.lineWidth = 1.2;
-    ctx.globalAlpha = 0.65;
-
-    var r = 48 - aim * 16;
     ctx.beginPath();
-    ctx.arc(0, 4, r, 0, Math.PI * 2);
+    ctx.arc(0, 4, radarPulse.r, 0, Math.PI * 2);
     ctx.stroke();
-
-    // Crosshairs
-    ctx.beginPath();
-    ctx.moveTo(-r - 18, 4);
-    ctx.lineTo(-r + 4, 4);
-    ctx.moveTo(r - 4, 4);
-    ctx.lineTo(r + 18, 4);
-    ctx.moveTo(0, 4 - r - 18);
-    ctx.lineTo(0, 4 - r + 4);
-    ctx.moveTo(0, 4 + r - 4);
-    ctx.lineTo(0, 4 + r + 18);
-    ctx.stroke();
-
-    // Corner targeting brackets around reticle
-    var brk = r + 22;
-    ctx.beginPath();
-    // TL
-    ctx.moveTo(-brk, -brk + 12); ctx.lineTo(-brk, -brk); ctx.lineTo(-brk + 12, -brk);
-    // TR
-    ctx.moveTo(brk - 12, -brk); ctx.lineTo(brk, -brk); ctx.lineTo(brk, -brk + 12);
-    // BL
-    ctx.moveTo(-brk, brk - 12); ctx.lineTo(-brk, brk); ctx.lineTo(-brk + 12, brk);
-    // BR
-    ctx.moveTo(brk - 12, brk); ctx.lineTo(brk, brk); ctx.lineTo(brk, brk - 12);
-    ctx.stroke();
-
-    // HUD Text
-    ctx.font = '10px "JetBrains Mono", monospace';
-    ctx.fillStyle = hudColor;
-    ctx.textAlign = 'center';
-    ctx.fillText('RANGE: 000.0m // SIGHTLINE: PERPENDICULAR', 0, r + 48);
 
     ctx.restore();
   }
 
-  function drawSoldier(aim, fire) {
+  function drawAmbientMotes() {
+    ctx.save();
+    for (var i = 0; i < ambientMotes.length; i++) {
+      var m = ambientMotes[i];
+      m.x += m.vx;
+      m.y += m.vy;
+
+      if (m.y < -220) m.y = 220;
+      if (m.x < -280) m.x = 280;
+      if (m.x > 280) m.x = -280;
+
+      ctx.fillStyle = 'rgba(56, 189, 248, ' + m.alpha + ')';
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, m.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawSoldier(aim, breath, aimOffset) {
     ctx.save();
 
-    // Color definitions with clear high contrast against dark viewport
     var bodyColor = '#1e2433';
     var armorColor = '#2d374d';
     var highlightEdge = '#475569';
-    var rimGlow = 'rgba(56, 189, 248, 0.4)';
+    var rimGlow = '#38bdf8';
 
-    var torsoY = 85 - aim * 10;
+    var torsoY = 82 - aim * 10 + breath;
+    var mouseTurn = aimOffset.x * 0.003;
+
+    // Apply subtle torso parallax tracking with mouse
+    ctx.translate(aimOffset.x * 0.15, aimOffset.y * 0.1);
+    ctx.rotate(mouseTurn);
 
     // ── Torso & Shoulders ──
     ctx.fillStyle = bodyColor;
     ctx.beginPath();
-    ctx.moveTo(-115, torsoY + 140);
-    ctx.lineTo(-100, torsoY + 25);
+    ctx.moveTo(-115, torsoY + 145);
+    ctx.lineTo(-102, torsoY + 25);
     ctx.lineTo(-65, torsoY - 18);
     ctx.lineTo(65, torsoY - 18);
-    ctx.lineTo(100, torsoY + 25);
-    ctx.lineTo(115, torsoY + 140);
+    ctx.lineTo(102, torsoY + 25);
+    ctx.lineTo(115, torsoY + 145);
     ctx.closePath();
     ctx.fill();
     ctx.strokeStyle = highlightEdge;
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // ── Tactical Plate Carrier / Armor ──
+    // ── Tactical Plate Carrier ──
     ctx.fillStyle = armorColor;
     ctx.beginPath();
-    ctx.roundRect(-52, torsoY + 6, 104, 80, 4);
+    ctx.roundRect(-52, torsoY + 6, 104, 82, 4);
     ctx.fill();
-    ctx.strokeStyle = '#38bdf8';
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // MOLLE Webbing
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    // MOLLE Webbing Loops
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
     for (var m = 0; m < 4; m++) {
       ctx.beginPath();
-      ctx.moveTo(-45, torsoY + 18 + m * 17);
-      ctx.lineTo(45, torsoY + 18 + m * 17);
+      ctx.moveTo(-44, torsoY + 18 + m * 17);
+      ctx.lineTo(44, torsoY + 18 + m * 17);
       ctx.stroke();
     }
 
-    // ── Head & Ballistic Helmet ──
+    // ── Head & Ballistic Combat Helmet ──
     var headY = torsoY - 78;
+    ctx.save();
+    ctx.translate(aimOffset.x * 0.12, 0);
+
     ctx.fillStyle = bodyColor;
     ctx.beginPath();
     ctx.arc(0, headY, 36, Math.PI, 0, false);
@@ -279,7 +268,7 @@
     ctx.strokeStyle = highlightEdge;
     ctx.stroke();
 
-    // Night-Vision Goggles / Tactical Visor
+    // Night-Vision Goggles / Tactical Optic Visor
     ctx.fillStyle = '#38bdf8';
     ctx.shadowColor = '#38bdf8';
     ctx.shadowBlur = 12;
@@ -288,26 +277,27 @@
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // Dual NVG lens cylinders
+    // Dual NVG Objective Lens Cylinders
     ctx.fillStyle = '#0284c7';
     ctx.beginPath();
     ctx.arc(-11, headY + 9, 4.5, 0, Math.PI * 2);
     ctx.arc(11, headY + 9, 4.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // Comms Headset
+    // Comms Headset with Boom
     ctx.fillStyle = armorColor;
     ctx.fillRect(-40, headY - 6, 8, 22);
     ctx.fillRect(32, headY - 6, 8, 22);
+    ctx.restore();
 
-    // ── Arms & Weapon (Aiming Transformation) ──
+    // ── Arms & Weapon System ──
     ctx.save();
 
     if (aim < 0.95) {
-      // Transitioning from low ready to forward
-      var weaponAngle = (1 - aim) * 0.65; // ~37° to 0°
-      var offsetX = (1 - aim) * 48;
-      var offsetY = (1 - aim) * 36;
+      // Transitioning smoothly from low ready to forward aim
+      var weaponAngle = (1 - aim) * 0.65;
+      var offsetX = (1 - aim) * 46;
+      var offsetY = (1 - aim) * 34;
 
       ctx.translate(offsetX, offsetY);
       ctx.rotate(weaponAngle);
@@ -324,21 +314,21 @@
       ctx.lineTo(10, 10);
       ctx.closePath();
       ctx.fill();
-      // Scope
+      // Holographic optic
       ctx.fillRect(12, -26, 44, 14);
 
-      // Hands
+      // Hands gripping weapon
       ctx.fillStyle = armorColor;
       ctx.beginPath();
       ctx.arc(82, 5, 12, 0, Math.PI * 2);
       ctx.arc(0, 12, 12, 0, Math.PI * 2);
       ctx.fill();
     } else {
-      // ── DIRECT PERPENDICULAR AIM (Pointing straight at viewer's screen!) ──
-      var recoilY = fire > 0 && fire < 0.28 ? (0.28 - fire) * 18 : 0;
-      ctx.translate(0, -recoilY);
+      // ── DIRECT PERPENDICULAR AIM (Directly Facing User) ──
+      // Dynamic micro-aim adjustment following cursor
+      ctx.translate(aimOffset.x * 0.35, aimOffset.y * 0.25);
 
-      // Arms extending forward directly toward camera
+      // Arms extending forward directly toward viewer
       ctx.fillStyle = bodyColor;
       ctx.beginPath();
       ctx.ellipse(-56, 32, 25, 40, -0.2, 0, Math.PI * 2);
@@ -372,7 +362,7 @@
       ctx.strokeStyle = '#64748b';
       ctx.strokeRect(-17, -40, 34, 24);
 
-      // Red Dot inside sight
+      // Collimated Red Dot Reticle inside optical window
       ctx.fillStyle = '#ef4444';
       ctx.shadowColor = '#ef4444';
       ctx.shadowBlur = 10;
@@ -381,7 +371,7 @@
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // ── BARREL & MUZZLE BRAKE (Directly facing the user) ──
+      // ── Barrel & Muzzle Compensator (Facing user) ──
       ctx.fillStyle = '#0f172a';
       ctx.beginPath();
       ctx.arc(0, 4, 14, 0, Math.PI * 2);
@@ -389,13 +379,13 @@
       ctx.strokeStyle = '#94a3b8';
       ctx.stroke();
 
-      // Dark bore opening straight at user
+      // Dark bore opening straight toward viewer
       ctx.fillStyle = '#020617';
       ctx.beginPath();
       ctx.arc(0, 4, 7, 0, Math.PI * 2);
       ctx.fill();
 
-      // Muzzle compensator ports
+      // Compensator gas ports
       ctx.fillStyle = '#64748b';
       for (var p = 0; p < 6; p++) {
         var pa = (p * Math.PI) / 3;
@@ -406,197 +396,94 @@
         ctx.fill();
       }
 
-      // Tactical Laser Sight Beam (Cuts straight out towards viewer)
-      ctx.fillStyle = 'rgba(239, 68, 68, 0.4)';
-      ctx.shadowColor = '#ef4444';
-      ctx.shadowBlur = 8;
-      ctx.beginPath();
-      ctx.arc(15, -12, 4 + Math.sin(Date.now() * 0.01) * 1.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-    }
+      // ── TACTICAL TARGETING LASER ──
+      // Dynamic laser spot & collimator flare tracking cursor
+      var laserOriginX = 14;
+      var laserOriginY = -12;
+      var laserTargetX = aimOffset.x * 1.5;
+      var laserTargetY = 4 + aimOffset.y * 1.2;
 
-    ctx.restore();
-    ctx.restore();
-  }
-
-  function drawBulletAndMuzzle(fire) {
-    if (fire <= 0) return;
-
-    ctx.save();
-
-    // ── MUZZLE FLASH BURST ──
-    if (fire < 0.42) {
-      var flashIntensity = (0.42 - fire) / 0.42;
-      var flashScale = 1 + flashIntensity * 2.8;
-
-      var flareGrad = ctx.createRadialGradient(0, 4, 2, 0, 4, 75 * flashScale);
-      flareGrad.addColorStop(0, 'rgba(255, 255, 255, ' + flashIntensity + ')');
-      flareGrad.addColorStop(0.2, 'rgba(245, 158, 11, ' + (flashIntensity * 0.9) + ')');
-      flareGrad.addColorStop(0.6, 'rgba(239, 68, 68, ' + (flashIntensity * 0.6) + ')');
-      flareGrad.addColorStop(1, 'rgba(239, 68, 68, 0)');
-
-      ctx.fillStyle = flareGrad;
-      ctx.beginPath();
-      ctx.arc(0, 4, 80 * flashScale, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Starburst spikes
-      ctx.fillStyle = 'rgba(255, 255, 255, ' + flashIntensity + ')';
-      for (var s = 0; s < 4; s++) {
-        var sAngle = (s * Math.PI) / 2 + Math.PI / 4;
-        ctx.save();
-        ctx.translate(0, 4);
-        ctx.rotate(sAngle);
-        ctx.beginPath();
-        ctx.moveTo(-3, 0);
-        ctx.lineTo(0, -65 * flashScale);
-        ctx.lineTo(3, 0);
-        ctx.lineTo(0, 65 * flashScale);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-
-    // ── 3D PERSPECTIVE BULLET (Streaks perpendicular toward user) ──
-    if (fire > 0.05 && fire < 0.9) {
-      var bulletProg = (fire - 0.05) / 0.85;
-      var bulletScale = Math.pow(bulletProg, 2.3) * 16 + 0.4;
-      var bulletAlpha = bulletProg > 0.82 ? (1 - bulletProg) / 0.18 : 1;
-
-      ctx.save();
-      ctx.translate(0, 4);
-      ctx.scale(bulletScale, bulletScale);
-      ctx.globalAlpha = bulletAlpha;
-
-      // Tracer Bloom
-      var tracerGrad = ctx.createRadialGradient(0, 0, 1, 0, 0, 22);
-      tracerGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      tracerGrad.addColorStop(0.25, 'rgba(56, 189, 248, 0.9)');
-      tracerGrad.addColorStop(0.7, 'rgba(245, 158, 11, 0.45)');
-      tracerGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
-
-      ctx.fillStyle = tracerGrad;
-      ctx.beginPath();
-      ctx.arc(0, 0, 22, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Copper jacket bullet base
-      ctx.fillStyle = '#b45309';
-      ctx.beginPath();
-      ctx.arc(0, 0, 8, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#f59e0b';
-      ctx.beginPath();
-      ctx.arc(0, 0, 6.2, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Intense white-hot tracer ignition core
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowColor = '#38bdf8';
-      ctx.shadowBlur = 14;
-      ctx.beginPath();
-      ctx.arc(0, 0, 3.8, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      // Mach shockwave ring around projectile
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+      // Faint atmospheric laser beam line
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.arc(0, 0, 13, 0, Math.PI * 2);
+      ctx.moveTo(laserOriginX, laserOriginY);
+      ctx.lineTo(laserTargetX, laserTargetY);
       ctx.stroke();
 
-      ctx.restore();
-    }
-
-    // Barrel smoke
-    if (fire > 0.3) {
-      var smokeAlpha = (1 - (fire - 0.3) / 0.7) * 0.4;
-      ctx.fillStyle = 'rgba(148, 163, 184, ' + smokeAlpha + ')';
+      // Intense Ruby Laser Collimator Core
+      ctx.fillStyle = '#ef4444';
+      ctx.shadowColor = '#ef4444';
+      ctx.shadowBlur = 12;
       ctx.beginPath();
-      ctx.arc(-10, -4 - (fire * 22), 14 + fire * 16, 0, Math.PI * 2);
-      ctx.arc(12, -10 - (fire * 26), 18 + fire * 22, 0, Math.PI * 2);
+      ctx.arc(laserTargetX, laserTargetY, 4, 0, Math.PI * 2);
       ctx.fill();
+      ctx.shadowBlur = 0;
     }
 
     ctx.restore();
+    ctx.restore();
   }
 
-  function drawParticles() {
+  function drawTacticalHUD(aim, aimOffset) {
     ctx.save();
 
-    // Shockwaves
-    for (var w = shockwaves.length - 1; w >= 0; w--) {
-      var wave = shockwaves[w];
-      wave.radius += wave.speed;
-      wave.alpha -= 0.035;
+    var isLocked = aim > 0.85;
+    var hudColor = isLocked ? '#38bdf8' : 'rgba(56, 189, 248, 0.55)';
+    ctx.strokeStyle = hudColor;
+    ctx.lineWidth = 1.2;
 
-      if (wave.alpha <= 0 || wave.radius >= wave.maxRadius) {
-        shockwaves.splice(w, 1);
-        continue;
-      }
+    var tx = aimOffset.x * 1.2;
+    var ty = 4 + aimOffset.y * 1.1;
 
-      ctx.strokeStyle = 'rgba(56, 189, 248, ' + (wave.alpha * 0.85) + ')';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.arc(0, 4, wave.radius, 0, Math.PI * 2);
-      ctx.stroke();
+    // Reticle radius smoothly contracts as aim locks
+    var r = 52 - aim * 20;
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, ' + (wave.alpha * 0.4) + ')';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(0, 4, wave.radius * 0.86, 0, Math.PI * 2);
-      ctx.stroke();
-    }
+    // ── Central Targeting Reticle ──
+    ctx.beginPath();
+    ctx.arc(tx, ty, r, 0, Math.PI * 2);
+    ctx.stroke();
 
-    // Sparks
-    for (var p = particles.length - 1; p >= 0; p--) {
-      var pt = particles[p];
-      pt.x += pt.vx;
-      pt.y += pt.vy;
-      pt.alpha -= pt.decay;
+    // Precision Crosshairs
+    ctx.beginPath();
+    ctx.moveTo(tx - r - 16, ty);
+    ctx.lineTo(tx - r + 4, ty);
+    ctx.moveTo(tx + r - 4, ty);
+    ctx.lineTo(tx + r + 16, ty);
+    ctx.moveTo(tx, ty - r - 16);
+    ctx.lineTo(tx, ty - r + 4);
+    ctx.moveTo(tx, ty + r - 4);
+    ctx.lineTo(tx, ty + r + 16);
+    ctx.stroke();
 
-      if (pt.alpha <= 0) {
-        particles.splice(p, 1);
-        continue;
-      }
+    // Corner Targeting Brackets
+    var b = r + 18;
+    ctx.beginPath();
+    // Top-Left
+    ctx.moveTo(tx - b, ty - b + 10); ctx.lineTo(tx - b, ty - b); ctx.lineTo(tx - b + 10, ty - b);
+    // Top-Right
+    ctx.moveTo(tx + b - 10, ty - b); ctx.lineTo(tx + b, ty - b); ctx.lineTo(tx + b, ty - b + 10);
+    // Bottom-Left
+    ctx.moveTo(tx - b, ty + b - 10); ctx.lineTo(tx - b, ty + b); ctx.lineTo(tx - b + 10, ty + b);
+    // Bottom-Right
+    ctx.moveTo(tx + b - 10, ty + b); ctx.lineTo(tx + b, ty + b); ctx.lineTo(tx + b, ty + b - 10);
+    ctx.stroke();
 
-      ctx.fillStyle = pt.color;
-      ctx.globalAlpha = pt.alpha;
-      ctx.beginPath();
-      ctx.arc(pt.x, pt.y + 4, pt.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    // ── Real-Time Mil-Spec Digital Telemetry Readout ──
+    var azMil = ((aimOffset.x / 38) * 14.5).toFixed(1);
+    var elMil = ((-aimOffset.y / 24) * 8.2).toFixed(1);
+    if (azMil >= 0) azMil = '+' + azMil;
+    if (elMil >= 0) elMil = '+' + elMil;
 
-    // Shell casing
-    if (casing && casing.alpha > 0) {
-      casing.x += casing.vx;
-      casing.y += casing.vy;
-      casing.vy += 0.45;
-      casing.rot += casing.vrot;
-      casing.alpha -= 0.015;
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillStyle = hudColor;
+    ctx.textAlign = 'center';
 
-      ctx.save();
-      ctx.translate(casing.x, casing.y);
-      ctx.rotate(casing.rot);
-      ctx.globalAlpha = Math.max(0, casing.alpha);
-      ctx.fillStyle = '#d97706';
-      ctx.fillRect(-6, -2, 12, 4.5);
-      ctx.strokeStyle = '#fef3c7';
-      ctx.strokeRect(-6, -2, 12, 4.5);
-      ctx.restore();
-    }
+    var statusText = isLocked ? 'AZ: ' + azMil + '° MIL // EL: ' + elMil + '° MIL // OPTIC: LOCKED' : 'STANDBY // LOW-READY STANCE';
+    ctx.fillText(statusText, tx, ty + r + 38);
 
     ctx.restore();
   }
-
-  // Interactive fire trigger on click/tap
-  canvas.addEventListener('click', function() {
-    triggerFire();
-  });
 
   requestAnimationFrame(draw);
 })();
